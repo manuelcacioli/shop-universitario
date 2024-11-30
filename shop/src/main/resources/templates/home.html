@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Universitario</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        /* Navbar Trasparente */
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.5); /* Trasparente con sfondo nero semi-opaco */
+            backdrop-filter: blur(10px); /* Effetto sfocato */
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #FFFFFF; /* Testo bianco */
+            font-weight: bold;
+        }
+z
+        .navbar-custom .nav-link:hover {
+            color: #F4B8D1; /* Rosa pallido su hover */
+        }
+
+        .navbar-custom .nav-link.active {
+            color: #FFFFFF; /* Testo bianco */
+            font-weight: bold;
+        }
+
+        /* Stile video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.4); /* Effetto scuro sul video */
+        }
+
+        .overlay h1, .overlay p {
+            color: #F4B8D1; /* Colore rosa */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .overlay .btn {
+            border: 2px solid transparent;
+            color: #F4B8D1;
+            background-color: transparent;
+            transition: all 0.3s;
+        }
+
+        .overlay .btn:hover {
+            background-color: #025548; /* Verde scuro */
+            border-color: #F4B8D1;
+            color: white;
+        }
+
+        /* Sezione About Us */
+        .about-section {
+            padding: 60px 20px;
+            background-color: #F4B8D1;
+            color: #025548;
+        }
+
+        .about-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #025548;
+        }
+
+        .about-section p {
+            text-align: justify;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #A0522D; /* Marrone */
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar Trasparente -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Shop Universitario</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/shop}">Shop</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Video Hero Section -->
+<div class="video-container">
+    <video autoplay muted loop class="video-background">
+        <source src="/static/videos/your-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay">
+        <div class="text-center">
+            <h1>Benvenuto su Shop Universitario</h1>
+            <p>Qualità per studenti, sempre con stile.</p>
+            <a class="btn btn-outline-light me-3" th:href="@{/shop}">Shop</a>
+            <a class="btn btn-outline-light" href="#about">About Us</a>
+        </div>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <h2>Chi Siamo</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Siamo il punto di riferimento per gli studenti universitari. Offriamo prodotti di alta qualità, dal design unico, adatti ad ogni esigenza accademica e personale. Con anni di esperienza, ci impegniamo per garantire il meglio.</p>
+            </div>
+            <div class="col-md-6">
+                <p>Ogni prodotto è selezionato con cura per soddisfare gli standard più elevati. Crediamo nel supportare il successo accademico e lo facciamo offrendo prodotti convenienti e di grande valore.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-3">
+    <p>&copy; 2024 Shop Universitario. All Rights Reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
