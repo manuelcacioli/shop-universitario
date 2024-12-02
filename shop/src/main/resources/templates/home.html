@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Universitario</title>
+    <title>Chrysalis</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         /* Navbar Trasparente */
         .navbar-custom {
@@ -13,26 +14,74 @@
             backdrop-filter: blur(10px); /* Effetto sfocato */
         }
 
+        .navbar-brand img {
+            max-height: 70px; /* Altezza massima del logo */
+            width: auto; /* Mantiene il rapporto d'aspetto */
+            object-fit: contain; /* Assicura che il logo non venga distorto */
+        }
+
+        .product-card img {
+            width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
+            height: 300px; /* Imposta un'altezza fissa */
+            object-fit: cover; /* Assicura che l'immagine mantenga le proporzioni */
+        }
+
+        /* Stile per uniformare l'altezza della card */
+        .product-card {
+            height: 400px; /* Altezza fissa per tutte le card */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            padding-left: 15px; /* Spazio a sinistra */
+            display: flex;
+            align-items: center;
+        }
+
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
             color: #FFFFFF; /* Testo bianco */
             font-weight: bold;
         }
-z
+
         .navbar-custom .nav-link:hover {
             color: #F4B8D1; /* Rosa pallido su hover */
         }
+
+            .about-section {
+        padding: 60px 20px;
+        background-color: #F4F4F0; /* Colore chiaro per lo sfondo */
+        color: #025548; /* Verde scuro */
+        font-family: 'Poppins', sans-serif; /* Font elegante */
+        font-size: 18px; /* Dimensione del testo */
+        line-height: 1.8; /* Spaziatura tra le righe */
+        text-align: justify; /* Giustifica il testo */
+        }
+
+        .about-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #025548; /* Verde scuro */
+        font-weight: 500; /* Peso medio del titolo */
+        }
+
+        .about-section p {
+            margin-bottom: 20px;
+        }
+
 
         .navbar-custom .nav-link.active {
             color: #FFFFFF; /* Testo bianco */
             font-weight: bold;
         }
 
-        /* Stile video */
+        /* Video Section */
         .video-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 100vh; /* Altezza completa */
             overflow: hidden;
         }
 
@@ -75,58 +124,75 @@ z
             color: white;
         }
 
-        /* Sezione About Us */
-        .about-section {
-            padding: 60px 20px;
-            background-color: #F4B8D1;
-            color: #025548;
+        /* Sidebar Carrello */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: #FFFFFF;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+            z-index: 1050;
+            overflow-y: auto;
         }
 
-        .about-section h2 {
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-sidebar .cart-header {
+            padding: 10px;
+            background-color: #A0522D;
+            color: #FFFFFF;
             text-align: center;
-            margin-bottom: 30px;
-            color: #025548;
         }
 
-        .about-section p {
-            text-align: justify;
+        .cart-sidebar .cart-content {
+            padding: 15px;
         }
 
         /* Footer */
         footer {
-            background-color: #A0522D; /* Marrone */
+            background-color: #025548; /* Verde */
             color: #FFFFFF;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-<!-- Navbar Trasparente -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Shop Universitario</a>
+        <a class="navbar-brand" href="#">
+            <img src="/images/logo_home.png" alt="Shop Universitario" class="logo">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/}">Home</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#about">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/shop}">Shop</a>
+                    <a class="nav-link" href="#products">Shop</a>
                 </li>
             </ul>
+            <form class="d-flex ms-3">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light ms-2" type="submit">Search</button>
+            </form>
+            <a class="btn btn-outline-light ms-3" onclick="toggleCart()">Cart</a>
         </div>
     </div>
 </nav>
 
-<!-- Video Hero Section -->
+<!-- Video Section -->
 <div class="video-container">
     <video autoplay muted loop class="video-background">
-        <source src="/static/videos/your-video.mp4" type="video/mp4">
+        <source src="/videos/your-video.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     <div class="overlay">
@@ -139,24 +205,76 @@ z
     </div>
 </div>
 
-<!-- About Us Section -->
-<section id="about" class="about-section">
+<!-- Sezione Prodotti -->
+<section id="products" class="py-5">
     <div class="container">
-        <h2>Chi Siamo</h2>
+        <h2 class="text-center mb-4">I Nostri Prodotti</h2>
         <div class="row">
-            <div class="col-md-6">
-                <p>Siamo il punto di riferimento per gli studenti universitari. Offriamo prodotti di alta qualità, dal design unico, adatti ad ogni esigenza accademica e personale. Con anni di esperienza, ci impegniamo per garantire il meglio.</p>
-            </div>
-            <div class="col-md-6">
-                <p>Ogni prodotto è selezionato con cura per soddisfare gli standard più elevati. Crediamo nel supportare il successo accademico e lo facciamo offrendo prodotti convenienti e di grande valore.</p>
+            <div class="col-md-4 mb-4" th:each="product : ${products}">
+                <div class="card product-card">
+                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Immagine prodotto">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" th:text="${product.nome}">Nome Prodotto</h5>
+                        <p class="card-text text-success fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Sidebar Carrello -->
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h4>Carrello</h4>
+        <button class="btn btn-sm btn-danger" onclick="toggleCart()">Chiudi</button>
+    </div>
+    <div class="cart-content">
+        <p>Carrello vuoto.</p>
+    </div>
+</div>
+
+<script>
+    function toggleCart() {
+        const cartSidebar = document.getElementById('cartSidebar');
+        cartSidebar.classList.toggle('open');
+    }
+</script>
+
+<section id="about" class="about-section">
+    <div class="container">
+        <h2>ABOUT US</h2>
+        <p>
+            Chrysalis Studio prende il nome dalla crisalide, simbolo del passaggio da bruco a farfalla, un momento di trasformazione e rinascita. Questo percorso rappresenta il cuore del nostro brand: creare prodotti che permettano a chi li indossa di esprimere liberamente la propria identità e vivere il proprio cambiamento con autenticità.
+        </p>
+        <p>
+            La farfalla, scelta come simbolo emblematico del brand, racchiude leggerezza, evoluzione e bellezza, valori che guidano ogni nostro prodotto.
+        </p>
+        <p>
+            I capi e gli accessori sono pensati per tutti, con un approccio inclusivo e genderless, realizzati con materiali sostenibili e cruelty-free. Utilizziamo tessuti riciclati e processi a basso impatto ambientale per ridurre al minimo gli sprechi e promuovere una moda etica e responsabile. Ogni articolo è progettato per trasmettere benessere e sicurezza, adattandosi a chiunque voglia sentirsi valorizzato e a proprio agio.
+        </p>
+        <p>
+            Chrysalis Studio crede nella diversità e nella bellezza autentica. La nostra comunicazione racconta storie vere, coinvolgendo persone di tutte le età, perché la trasformazione appartiene a ognuno di noi. Chrysalis Studio unisce stile, sostenibilità e il coraggio di essere se stessi.
+        </p>
+        <h3 class="text-center mt-4">SLOGAN</h3>
+        <p class="text-center"><em>"Il coraggio di essere se stessi"</em></p>
+    </div>
+</section>
+
 <!-- Footer -->
-<footer class="text-center py-3">
-    <p>&copy; 2024 Shop Universitario. All Rights Reserved.</p>
+<footer class="text-center py-4">
+    <div class="container">
+        <p>&copy; 2024 Chrysalis Studio. All Rights Reserved.</p>
+        <p>Email: <a href="mailto:info@chrysalisstudio.com" style="color: #FFFFFF;">info@chrysalisstudio.com</a></p>
+        <div class="social-icons mt-2">
+            <a href="https://www.instagram.com/chrysalisstudio_/" target="_blank" class="me-3">
+                <img src="/images/instagram.png" alt="Instagram" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://www.tiktok.com/@tuo_account" target="_blank">
+                <img src="/images/tik-tok.png" alt="TikTok" style="width: 30px; height: 30px;">
+            </a>
+        </div>
+    </div>
 </footer>
 
 <!-- Bootstrap JS -->

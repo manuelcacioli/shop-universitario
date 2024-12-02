@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("/api/")
 public class ProductController {
     @Autowired
     private ProductService service;
@@ -25,11 +25,14 @@ public class ProductController {
 //
 //    }
 
-    @GetMapping("/list")
+    @GetMapping("/home")
     public String showProducts(Model model) {
         List<ProductEntity> products = service.getAllProduct();
+        for (int i = 0; i < products.size(); i++) {
+            System.out.println("Prodotto n. " + i + ": " + products.get(i).toString());
+        }
         model.addAttribute("products", products); // Passa la lista prodotti alla vista
-        return "products"; // Nome del file HTML senza suffisso
+        return "home"; // Nome del file HTML senza suffisso
     }
 
 }

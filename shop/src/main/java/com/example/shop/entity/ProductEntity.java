@@ -25,4 +25,6 @@ public class ProductEntity {
     private String descrizione;
     @Column(name = "prezzo", precision = 10, scale = 2)
     private BigDecimal prezzo;
+    @Column(name = "imageUrl")
+    private String imageUrl;
 }
