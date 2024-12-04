@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettagli Prodotto</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+    /* Personalizza lo stile del prodotto */
+    body {
+    padding-top: 70px; /* Aggiunge spazio per la navbar fissa */
+}
+    .product-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Due colonne: immagine e dettagli */
+        gap: 30px;
+        align-items: center;
+        margin: 50px auto;
+        max-width: 1200px;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .product-details {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .size-buttons button {
+        margin: 5px;
+        border: 1px solid #000;
+        background: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .size-buttons button:hover {
+        background: #000;
+        color: #fff;
+    }
+
+    .add-to-cart {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+        background-color: #555;
+    }
+
+    .back-button {
+        background: none;
+        border: 1px solid #333;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .back-button:hover {
+        background-color: #333;
+        color: #fff;
+    }
+    #navbar {
+    transition: top 0.3s; /* Transizione fluida per l'animazione */
+    }
+
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav id="navbar" class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/api/home">
+            <img src="/images/logo_home.png" alt="Shop Universitario" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+            </ul>
+            <a class="btn btn-outline-light ms-3" onclick="toggleCart()">Cart</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Prodotto -->
+<div class="product-container mt-5">
+    <!-- Immagine prodotto -->
+    <div class="product-image">
+        <img th:src="${product.imageUrl}" alt="Immagine prodotto">
+    </div>
+
+    <!-- Dettagli prodotto -->
+    <div class="product-details">
+        <h2 th:text="${product.nome}">Nome Prodotto</h2>
+        <p th:text="${product.descrizione}">Descrizione</p>
+        <p class="text-success fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
+
+        <!-- Seleziona taglia -->
+        <div>
+            <h5>Seleziona la Taglia:</h5>
+            <div class="size-buttons">
+                <button>XS</button>
+                <button>S</button>
+                <button>M</button>
+                <button>L</button>
+                <button>XL</button>
+                <button>XXL</button>
+            </div>
+        </div>
+
+        <!-- Pulsanti -->
+        <div class="mt-4">
+            <button class="add-to-cart" onclick="addToCart(${product.id})">Aggiungi al carrello</button>
+            <button class="back-button" onclick="window.history.back()">Torna Indietro</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4 mt-5">
+    <div class="container">
+        <p>&copy; 2024 Chrysalis Studio. All Rights Reserved.</p>
+        <p>Email: <a href="mailto:info@chrysalisstudio.com">info@chrysalisstudio.com</a></p>
+    </div>
+</footer>
+
+<script>
+    function addToCart(productId) {
+        fetch(`/api/cart/add?productId=${productId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Prodotto aggiunto al carrello!");
+                // Aggiorna il carrello (se esiste una funzione per il caricamento)
+            } else {
+                alert("Errore durante l'aggiunta del prodotto!");
+            }
+        })
+        .catch(error => console.error('Errore durante la richiesta addToCart:', error));
+    }
+
+    let lastScrollTop = 0; // Posizione iniziale dello scroll
+    const navbar = document.getElementById('navbar'); // Navbar da manipolare
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Nasconde la navbar quando si scorre verso il basso
+        if (scrollTop > lastScrollTop) {
+            navbar.style.top = '-100px'; // Nasconde la navbar (modifica la posizione top)
+        } else {
+            navbar.style.top = '0'; // Mostra la navbar
+        }
+
+        // Aggiorna la posizione dello scroll
+        lastScrollTop = scrollTop;
+    });
+
+
+</script>
+</body>
+</html>

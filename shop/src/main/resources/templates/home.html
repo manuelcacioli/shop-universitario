@@ -7,159 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* Navbar Trasparente */
-        .navbar-custom {
-            background-color: rgba(0, 0, 0, 0.5); /* Trasparente con sfondo nero semi-opaco */
-            backdrop-filter: blur(10px); /* Effetto sfocato */
-        }
-
-        .navbar-brand img {
-            max-height: 70px; /* Altezza massima del logo */
-            width: auto; /* Mantiene il rapporto d'aspetto */
-            object-fit: contain; /* Assicura che il logo non venga distorto */
-        }
-
-        .product-card img {
-            width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
-            height: 300px; /* Imposta un'altezza fissa */
-            object-fit: cover; /* Assicura che l'immagine mantenga le proporzioni */
-        }
-
-        /* Stile per uniformare l'altezza della card */
-        .product-card {
-            height: 400px; /* Altezza fissa per tutte le card */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .navbar-brand {
-            padding-left: 15px; /* Spazio a sinistra */
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #FFFFFF; /* Testo bianco */
-            font-weight: bold;
-        }
-
-        .navbar-custom .nav-link:hover {
-            color: #F4B8D1; /* Rosa pallido su hover */
-        }
-
-            .about-section {
-        padding: 60px 20px;
-        background-color: #F4F4F0; /* Colore chiaro per lo sfondo */
-        color: #025548; /* Verde scuro */
-        font-family: 'Poppins', sans-serif; /* Font elegante */
-        font-size: 18px; /* Dimensione del testo */
-        line-height: 1.8; /* Spaziatura tra le righe */
-        text-align: justify; /* Giustifica il testo */
-        }
-
-        .about-section h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #025548; /* Verde scuro */
-        font-weight: 500; /* Peso medio del titolo */
-        }
-
-        .about-section p {
-            margin-bottom: 20px;
-        }
-
-
-        .navbar-custom .nav-link.active {
-            color: #FFFFFF; /* Testo bianco */
-            font-weight: bold;
-        }
-
-        /* Video Section */
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* Altezza completa */
-            overflow: hidden;
-        }
-
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.4); /* Effetto scuro sul video */
-        }
-
-        .overlay h1, .overlay p {
-            color: #F4B8D1; /* Colore rosa */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        }
-
-        .overlay .btn {
-            border: 2px solid transparent;
-            color: #F4B8D1;
-            background-color: transparent;
-            transition: all 0.3s;
-        }
-
-        .overlay .btn:hover {
-            background-color: #025548; /* Verde scuro */
-            border-color: #F4B8D1;
-            color: white;
-        }
-
-        /* Sidebar Carrello */
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100%;
-            background-color: #FFFFFF;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-            z-index: 1050;
-            overflow-y: auto;
-        }
-
-        .cart-sidebar.open {
-            right: 0;
-        }
-
-        .cart-sidebar .cart-header {
-            padding: 10px;
-            background-color: #A0522D;
-            color: #FFFFFF;
-            text-align: center;
-        }
-
-        .cart-sidebar .cart-content {
-            padding: 15px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #025548; /* Verde */
-            color: #FFFFFF;
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <!-- Navbar -->
@@ -180,9 +28,14 @@
                     <a class="nav-link" href="#products">Shop</a>
                 </li>
             </ul>
-            <form class="d-flex ms-3">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light ms-2" type="submit">Search</button>
+            <form class="search-bar d-flex align-items-center" id="searchBar">
+                <button type="button" class="btn btn-light" id="searchIcon">
+                    <img src="/images/search.png" id="loghettino">
+                </button>
+                <div id="searchDropdown" class="search-dropdown">
+                    <input class="form-control mb-2" type="search" placeholder="Inserisci qui..." aria-label="Search">
+                    <button class="btn btn-outline-primary w-100" type="submit">Cerca</button>
+                </div>
             </form>
             <a class="btn btn-outline-light ms-3" onclick="toggleCart()">Cart</a>
         </div>
@@ -195,14 +48,14 @@
         <source src="/videos/your-video.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-    <div class="overlay">
-        <div class="text-center">
-            <h1>Benvenuto su Shop Universitario</h1>
-            <p>Qualità per studenti, sempre con stile.</p>
-            <a class="btn btn-outline-light me-3" th:href="@{/shop}">Shop</a>
-            <a class="btn btn-outline-light" href="#about">About Us</a>
-        </div>
-    </div>
+<!--    <div class="overlay">-->
+<!--        <div class="text-center">-->
+<!--            <h1>Benvenuto su Shop Universitario</h1>-->
+<!--            <p>Qualità per studenti, sempre con stile.</p>-->
+<!--            <a class="btn btn-outline-light me-3" href="#products">Shop</a>-->
+<!--            <a class="btn btn-outline-light" href="#about">About Us</a>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 <!-- Sezione Prodotti -->
@@ -216,6 +69,8 @@
                     <div class="card-body text-center">
                         <h5 class="card-title" th:text="${product.nome}">Nome Prodotto</h5>
                         <p class="card-text text-success fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
+                        <a th:href="@{/api/products/{id}(id=${product.id})}" class="btn btn-primary">Dettagli</a>
+                        <button class="btn btn-success" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
                     </div>
                 </div>
             </div>
@@ -223,22 +78,103 @@
     </div>
 </section>
 
+
 <!-- Sidebar Carrello -->
 <div id="cartSidebar" class="cart-sidebar">
     <div class="cart-header">
         <h4>Carrello</h4>
-        <button class="btn btn-sm btn-danger" onclick="toggleCart()">Chiudi</button>
+        <button class="btn btn-outline-light me-3" onclick="toggleCart()">Chiudi</button>
     </div>
-    <div class="cart-content">
+    <div id="cartContent" class="cart-content">
         <p>Carrello vuoto.</p>
+        <div id="cartTotal" class="text-end fw-bold"></div>
     </div>
+
 </div>
 
 <script>
-    function toggleCart() {
+
+        const searchIcon = document.getElementById('searchIcon');
+        const searchDropdown = document.getElementById('searchDropdown');
+
+        searchIcon.addEventListener('click', () => {
+            searchDropdown.classList.toggle('show');
+        });
+
+        // Chiudi la tendina quando si clicca fuori
+        document.addEventListener('click', (e) => {
+            if (!searchBar.contains(e.target)) {
+                searchDropdown.classList.remove('show');
+            }
+        });
+
+function toggleCart() {
+        console.log("Toggling cart sidebar");
         const cartSidebar = document.getElementById('cartSidebar');
         cartSidebar.classList.toggle('open');
+        if (cartSidebar.classList.contains('open')) {
+            console.log("Cart is open. Loading items...");
+            loadCartItems(); // Carica gli elementi del carrello quando la sidebar è aperta
+        }
     }
+
+    function addToCart(productId) {
+        console.log(`Adding product with ID: ${productId} to cart`);
+        fetch(`/api/cart/add?productId=${productId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Product added successfully");
+                    alert("Prodotto aggiunto al carrello!");
+                    loadCartItems(); // Aggiorna il contenuto del carrello
+                } else {
+                    console.error("Failed to add product to cart");
+                    alert("Errore durante l'aggiunta del prodotto!");
+                }
+            })
+            .catch(error => console.error('Errore durante la richiesta addToCart:', error));
+    }
+
+function loadCartItems() {
+    fetch('/api/cart/items')
+        .then(response => response.json())
+        .then(items => {
+            const cartContent = document.getElementById('cartContent');
+            if (items.length === 0) {
+                cartContent.innerHTML = '<p>Carrello vuoto.</p>';
+            } else {
+                let total = 0;
+                cartContent.innerHTML = items.map(item => {
+                    total += item.product.prezzo * item.quantity;
+                    return `
+                        <div class="cart-item d-flex align-items-center mb-2">
+                            <img src="${item.product.imageUrl}" alt="${item.product.nome}" class="me-2" style="width: 50px; height: 50px;">
+                            <span class="me-auto">${item.product.nome} (x${item.quantity})</span>
+                            <span class="text-success fw-bold">${(item.product.prezzo * item.quantity).toFixed(2)} €</span>
+                            <button class="btn btn-danger btn-sm ms-2" onclick="removeFromCart(${item.product.id})">Rimuovi</button>
+                        </div>
+                    `;
+                }).join('');
+                cartContent.innerHTML += `<div class="mt-3 fw-bold text-end">Totale: ${total.toFixed(2)} €</div>`;
+            }
+        })
+        .catch(error => console.error('Errore durante il caricamento del carrello:', error));
+}
+
+function removeFromCart(productId) {
+    fetch(`/api/cart/remove?productId=${productId}`, { method: 'DELETE' })
+        .then(response => {
+            if (response.ok) {
+                loadCartItems();
+            } else {
+                alert('Errore durante la rimozione del prodotto');
+            }
+        })
+        .catch(error => console.error('Errore:', error));
+}
+
 </script>
 
 <section id="about" class="about-section">
@@ -256,8 +192,6 @@
         <p>
             Chrysalis Studio crede nella diversità e nella bellezza autentica. La nostra comunicazione racconta storie vere, coinvolgendo persone di tutte le età, perché la trasformazione appartiene a ognuno di noi. Chrysalis Studio unisce stile, sostenibilità e il coraggio di essere se stessi.
         </p>
-        <h3 class="text-center mt-4">SLOGAN</h3>
-        <p class="text-center"><em>"Il coraggio di essere se stessi"</em></p>
     </div>
 </section>
 

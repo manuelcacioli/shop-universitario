@@ -1,0 +1,185 @@
+/* Navbar Trasparente */
+.navbar-custom {
+    background-color: rgba(0, 0, 0, 0.5); /* Trasparente con sfondo nero semi-opaco */
+    backdrop-filter: blur(10px); /* Effetto sfocato */
+}
+
+.navbar-brand img {
+    max-height: 70px; /* Altezza massima del logo */
+    width: auto; /* Mantiene il rapporto d'aspetto */
+    object-fit: contain; /* Assicura che il logo non venga distorto */
+}
+
+.product-card img {
+    width: 100%; /* Adatta l'immagine alla larghezza del contenitore */
+    height: 300px; /* Imposta un'altezza fissa */
+    object-fit: cover; /* Assicura che l'immagine mantenga le proporzioni */
+}
+
+/* Stile per uniformare l'altezza della card */
+.product-card {
+    height: 400px; /* Altezza fissa per tutte le card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    padding-left: 15px; /* Spazio a sinistra */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: #FFFFFF; /* Testo bianco */
+    font-weight: bold;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #F4B8D1; /* Rosa pallido su hover */
+}
+
+    .about-section {
+padding: 60px 20px;
+background-color: #F4F4F0; /* Colore chiaro per lo sfondo */
+color: #025548; /* Verde scuro */
+font-family: 'Poppins', sans-serif; /* Font elegante */
+font-size: 18px; /* Dimensione del testo */
+line-height: 1.8; /* Spaziatura tra le righe */
+text-align: justify; /* Giustifica il testo */
+}
+
+.about-section h2 {
+text-align: center;
+margin-bottom: 30px;
+color: #025548; /* Verde scuro */
+font-weight: 500; /* Peso medio del titolo */
+}
+
+.about-section p {
+    margin-bottom: 20px;
+}
+
+
+.navbar-custom .nav-link.active {
+    color: #FFFFFF; /* Testo bianco */
+    font-weight: bold;
+}
+
+/* Video Section */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Altezza completa */
+    overflow: hidden;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4); /* Effetto scuro sul video */
+}
+
+.overlay h1, .overlay p {
+    color: #F4B8D1; /* Colore rosa */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.overlay .btn {
+    border: 2px solid transparent;
+    color: #F4B8D1;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.overlay .btn:hover {
+    background-color: #025548; /* Verde scuro */
+    border-color: #F4B8D1;
+    color: white;
+}
+
+/* Sidebar Carrello */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background-color: #FFFFFF;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    z-index: 1050;
+    overflow-y: auto;
+}
+
+.cart-sidebar.open {
+    right: 0;
+}
+
+.cart-sidebar .cart-header {
+    padding: 10px;
+    background-color: #025548;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.cart-sidebar .cart-content {
+    padding: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: #025548; /* Verde */
+    color: #FFFFFF;
+    padding: 20px;
+}
+/* Barra di ricerca */
+.search-bar {
+    position: relative;
+}
+
+/* Dropdown nascosto di default */
+.search-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%; /* Subito sotto il bottone della lente */
+    right: 0; /* Allineato alla destra della navbar */
+    width: 250px; /* Larghezza fissa */
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+}
+
+/* Transizione per apertura */
+.search-dropdown.show {
+    display: block;
+}
+
+/* Pulsante di ricerca */
+#searchIcon {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+#loghettino {
+width :20px;
+}
