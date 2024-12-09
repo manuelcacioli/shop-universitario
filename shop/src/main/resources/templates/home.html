@@ -37,7 +37,7 @@
                     <button class="btn btn-outline-primary w-100" type="submit">Cerca</button>
                 </div>
             </form>
-            <a class="btn btn-outline-light ms-3" onclick="toggleCart()">Cart</a>
+            <a class="btn btn-outline" onclick="toggleCart()"><img src="/images/cart.png" style="width: 20px;"></a>
         </div>
     </div>
 </nav>
@@ -65,12 +65,14 @@
         <div class="row">
             <div class="col-md-4 mb-4" th:each="product : ${products}">
                 <div class="card product-card">
-                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Immagine prodotto">
+                    <img th:src="${product.imageUrl}" class="card-img-top" alt="Nome prodotto">
                     <div class="card-body text-center">
-                        <h5 class="card-title" th:text="${product.nome}">Nome Prodotto</h5>
+                        <h5 class="card-title" th:text="${product.nome}">Nome prodotto</h5>
                         <p class="card-text text-success fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
-                        <a th:href="@{/api/products/{id}(id=${product.id})}" class="btn btn-primary">Dettagli</a>
-                        <button class="btn btn-success" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
+                        <div class="d-flex justify-content-around">
+                            <a th:href="@{/api/products/{id}(id=${product.id})}" class="btn btn-primary">Dettagli</a>
+                            <button class="btn btn-success" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
+                        </div>
                     </div>
                 </div>
             </div>
