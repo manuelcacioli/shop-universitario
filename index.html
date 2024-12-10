@@ -23,12 +23,101 @@
         p {
             font-size: 1.5rem;
         }
-    </style>
+        .neonText {
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #f09,
+      0 0 82px #f09,
+      0 0 92px #f09,
+      0 0 102px #f09,
+      0 0 151px #f09;
+}
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #f09,
+      0 0 80px #f09,
+      0 0 90px #f09,
+      0 0 100px #f09,
+      0 0 150px #f09;
+  }
+  20%, 24%, 55% {       
+    text-shadow: none;
+  }
+}
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Altezza completa */
+    overflow: hidden;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Additional styling */
+  
+body {
+  font-size: 18px;
+  font-family: "Vibur", sans-serif;
+  background-color: #010a01;
+}  
+
+h1, h2 {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+  
+h1 {
+    font-size: 4.2rem;
+    animation: flicker 1.5s infinite alternate;
+}
+  
+h2 {
+    font-size: 1.8rem;
+}
+
+.container {
+  margin-top: 20vh;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4); /* Effetto scuro sul video */
+}
+
+</style>
 </head>
 <body>
-    <div>
-        <h1>Chrysalis Studio</h1>
-        <p>Coming Soon! Stiamo lavorando per offrirti qualcosa di straordinario.</p>
-        <p>Seguici su: 
-            <a href="https://instagram.com/tua_pagina" target="_blank">Instagram</a> | 
-            <a href="https://tiktok.com/@tua_pagina" target="_bla
+    <div class="video-container">
+            <video autoplay muted loop class="video-background">
+                <source src="your-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        <div class="overlay">
+            <div class="text-center">
+            <h1 class="neonText">Coming Soon</h1>
+            <p class="neonText">Stiamo lavorando per offrirti qualcosa di straordinario.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
