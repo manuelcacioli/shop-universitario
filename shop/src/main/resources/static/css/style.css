@@ -76,6 +76,10 @@ font-weight: 500; /* Peso medio del titolo */
     margin-bottom: 20px;
 }
 
+h5 {
+    color: #025548; /* Verde scuro */
+    font-family: 'Poppins', sans-serif; /* Font elegante */
+}
 
 .navbar-custom .nav-link.active {
     color: #FFFFFF; /* Testo bianco */
@@ -99,6 +103,25 @@ font-weight: 500; /* Peso medio del titolo */
     object-fit: cover;
 }
 
+#carouselSection {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+
+#packagingCarousel .carousel-item img{
+    max-height: 500px; /* Altezza massima */
+    max-width: 100%;  /* Larghezza massima */
+    object-fit: cover; /* Adatta il contenuto senza deformarlo */
+    margin: 0 auto;    /* Centra l'immagine o il video */
+}
+
+#packagingCarousel .carousel-item video {
+    height: auto; /* Mantieni proporzioni corrette per i video */
+    width: 100%;  /* Larghezza al 100% del contenitore */
+    border-radius: 8px; /* Arrotonda gli angoli del video */
+}
+
+
 .overlay {
     position: absolute;
     top: 0;
@@ -115,6 +138,38 @@ font-weight: 500; /* Peso medio del titolo */
     color: #F4B8D1; /* Colore rosa */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
+
+.btn-rosa {
+    background-color: #F4B8D1; /* Rosa */
+    color: #ffffff; /* Testo bianco */
+    border-color: #F4B8D1; /* Bordo rosa */
+    font-family: 'Poppins', sans-serif; /* Font elegante */
+}
+
+.btn-rosa:hover {
+    background-color: #E89CBA; /* Rosa più scuro al passaggio del mouse */
+    border-color: #E89CBA;
+    color: #ffffff;
+}
+
+.btn-cart {
+    background-color: #4A3931; /* Marrone */
+    color: #ffffff; /* Testo bianco */
+    border-color: #4A3931; /* Bordo Marrone */
+    font-family: 'Poppins', sans-serif; /* Font elegante */
+}
+
+.btn-cart:hover {
+    background-color: #3A2E28; /* Marrone più scuro al passaggio del mouse */
+    border-color: #3A2E28;
+    color: #ffffff;
+}
+
+.text-marrone {
+    color: #4A3931; /* Marrone */
+    font-family: 'Poppins', sans-serif; /* Font elegante */
+}
+
 
 .overlay .btn {
     border: 2px solid transparent;
