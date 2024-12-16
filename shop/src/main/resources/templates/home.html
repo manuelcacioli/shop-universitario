@@ -29,9 +29,6 @@
                 </li>
             </ul>
             <form class="search-bar d-flex align-items-center" id="searchBar">
-                <button type="button" class="btn btn-light" id="searchIcon">
-                    <img src="/images/search.png" id="loghettino">
-                </button>
                 <div id="searchDropdown" class="search-dropdown">
                     <input class="form-control mb-2" type="search" placeholder="Inserisci qui..." aria-label="Search">
                     <button class="btn btn-outline-primary w-100" type="submit">Cerca</button>
@@ -69,7 +66,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title" th:text="${product.nome}">Nome prodotto</h5>
                         <p class="card-text text-marrone fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around gap-2">
                             <a th:href="@{/api/products/{id}(id=${product.id})}" class="btn btn-rosa">Dettagli</a>
                             <button class="btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
                         </div>
@@ -133,6 +130,21 @@
 
 </div>
 
+<!-- Toast Bootstrap -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Carrello</strong>
+            <small>Adesso</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Prodotto aggiunto al carrello con successo!
+        </div>
+    </div>
+</div>
+
+
 <script>
 
         const searchIcon = document.getElementById('searchIcon');
@@ -168,7 +180,7 @@ function toggleCart() {
             .then(response => {
                 if (response.ok) {
                     console.log("Product added successfully");
-                    alert("Prodotto aggiunto al carrello!");
+                    showToast(); // Mostra il toast
                     loadCartItems(); // Aggiorna il contenuto del carrello
                 } else {
                     console.error("Failed to add product to cart");
@@ -177,6 +189,12 @@ function toggleCart() {
             })
             .catch(error => console.error('Errore durante la richiesta addToCart:', error));
     }
+
+function showToast() {
+    const toastElement = document.getElementById('cartToast');
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+}
 
 function loadCartItems() {
     fetch('/api/cart/items')
@@ -194,7 +212,7 @@ function loadCartItems() {
                             <img src="${item.product.imageUrl}" alt="${item.product.nome}" class="me-2" style="width: 50px; height: 50px;">
                             <span class="me-auto">${item.product.nome} (x${item.quantity})</span>
                             <span class="text-success fw-bold">${(item.product.prezzo * item.quantity).toFixed(2)} €</span>
-                            <button class="btn btn-danger btn-sm ms-2" onclick="removeFromCart(${item.product.id})">Rimuovi</button>
+                            <button class="btn btn-danger btn-sm ms-2" onclick="removeFromCart(${item.product.id})">-</button>
                         </div>
                     `;
                 }).join('');
@@ -244,9 +262,6 @@ function removeFromCart(productId) {
         <div class="social-icons mt-2">
             <a href="https://www.instagram.com/chrysalisstudio_/" target="_blank" class="me-3">
                 <img src="/images/instagram.png" alt="Instagram" style="width: 30px; height: 30px;">
-            </a>
-            <a href="https://www.tiktok.com/@tuo_account" target="_blank">
-                <img src="/images/tik-tok.png" alt="TikTok" style="width: 30px; height: 30px;">
             </a>
         </div>
     </div>

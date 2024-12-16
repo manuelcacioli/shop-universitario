@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettagli Prodotto</title>
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Lightbox2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
     /* Personalizza lo stile del prodotto */
     body {
@@ -88,21 +98,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="/api/home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/api/home#about">About Us</a></li>
             </ul>
-            <a class="btn btn-outline-light ms-3" onclick="toggleCart()">Cart</a>
+            <a class="btn btn-outline" onclick="toggleCart()"><img src="/images/cart.png" style="width: 20px;"></a>
         </div>
     </div>
 </nav>
 
 <!-- Prodotto -->
 <div class="product-container mt-5">
-    <!-- Immagine prodotto -->
-    <div class="product-image">
-        <img th:src="${product.imageUrl}" alt="Immagine prodotto">
-    </div>
 
+    <div class="product-image">
+        <a th:href="@{${product.imageUrl}}" data-lightbox="product-gallery" data-title="Dettaglio prodotto">
+            <img th:src="@{${product.imageUrl}}" alt="Immagine prodotto" style="cursor: zoom-in; border-radius: 10px;">
+        </a>
+    </div>
     <!-- Dettagli prodotto -->
     <div class="product-details">
         <h2 th:text="${product.nome}">Nome Prodotto</h2>
@@ -113,46 +124,145 @@
         <div>
             <h5>Seleziona la Taglia:</h5>
             <div class="size-buttons">
-                <button>XS</button>
-                <button>S</button>
-                <button>M</button>
-                <button>L</button>
-                <button>XL</button>
-                <button>XXL</button>
+                <button>OS</button>
             </div>
         </div>
 
         <!-- Pulsanti -->
         <div class="mt-4">
-            <button class="add-to-cart" onclick="addToCart(${product.id})">Aggiungi al carrello</button>
+<!--            <button class="add-to-cart" onclick="addToCart(${product.id})">Aggiungi al carrello</button>-->
+            <button class="add-to-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
             <button class="back-button" onclick="window.history.back()">Torna Indietro</button>
         </div>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="text-center py-4 mt-5">
+<footer class="text-center py-4">
     <div class="container">
         <p>&copy; 2024 Chrysalis Studio. All Rights Reserved.</p>
-        <p>Email: <a href="mailto:info@chrysalisstudio.com">info@chrysalisstudio.com</a></p>
+        <p>Email: <a href="mailto:info@chrysalisstudio.com" style="color: #FFFFFF;">info@chrysalisstudio.com</a></p>
+        <div class="social-icons mt-2">
+            <a href="https://www.instagram.com/chrysalisstudio_/" target="blank" class="me-3">
+                <img src="/images/instagram.png" alt="Instagram" style="width: 30px; height: 30px;">
+            </a>
+        </div>
     </div>
 </footer>
 
+<!-- Sidebar Carrello -->
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h4>Carrello</h4>
+        <button class="btn btn-outline-light me-3" onclick="toggleCart()">Chiudi</button>
+    </div>
+    <div id="cartContent" class="cart-content">
+        <p>Carrello vuoto.</p>
+        <div id="cartTotal" class="text-end fw-bold"></div>
+    </div>
+</div>
+
+
+<!-- Toast Bootstrap -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Carrello</strong>
+            <small>Adesso</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Prodotto aggiunto al carrello con successo!
+        </div>
+    </div>
+</div>
+
 <script>
+        const searchIcon = document.getElementById('searchIcon');
+        const searchDropdown = document.getElementById('searchDropdown');
+
+        searchIcon.addEventListener('click', () => {
+            searchDropdown.classList.toggle('show');
+        });
+
+        // Chiudi la tendina quando si clicca fuori
+        document.addEventListener('click', (e) => {
+            if (!searchBar.contains(e.target)) {
+                searchDropdown.classList.remove('show');
+            }
+        });
+
+    function toggleCart() {
+        console.log("Toggling cart sidebar");
+        const cartSidebar = document.getElementById('cartSidebar');
+        cartSidebar.classList.toggle('open');
+        if (cartSidebar.classList.contains('open')) {
+            console.log("Cart is open. Loading items...");
+            loadCartItems(); // Carica gli elementi del carrello quando la sidebar è aperta
+        }
+    }
+
     function addToCart(productId) {
+        console.log(`Adding product with ID: ${productId} to cart`);
         fetch(`/api/cart/add?productId=${productId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(response => {
-            if (response.ok) {
-                alert("Prodotto aggiunto al carrello!");
-                // Aggiorna il carrello (se esiste una funzione per il caricamento)
+            .then(response => {
+                if (response.ok) {
+                    console.log("Product added successfully");
+                    showToast(); // Mostra il toast
+                    loadCartItems(); // Aggiorna il contenuto del carrello
+                } else {
+                    console.error("Failed to add product to cart");
+                    alert("Errore durante l'aggiunta del prodotto!");
+                }
+            })
+            .catch(error => console.error('Errore durante la richiesta addToCart:', error));
+    }
+
+    // Funzione per mostrare il Toast
+function showToast() {
+    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+    toast.show();
+}
+
+    function loadCartItems() {
+    fetch('/api/cart/items')
+        .then(response => response.json())
+        .then(items => {
+            const cartContent = document.getElementById('cartContent');
+            if (items.length === 0) {
+                cartContent.innerHTML = '<p>Carrello vuoto.</p>';
             } else {
-                alert("Errore durante l'aggiunta del prodotto!");
+                let total = 0;
+                cartContent.innerHTML = items.map(item => {
+                    total += item.product.prezzo * item.quantity;
+                    return `
+                        <div class="cart-item d-flex align-items-center mb-2">
+                            <img src="${item.product.imageUrl}" alt="${item.product.nome}" class="me-2" style="width: 50px; height: 50px;">
+                            <span class="me-auto">${item.product.nome} (x${item.quantity})</span>
+                            <span class="text-success fw-bold">${(item.product.prezzo * item.quantity).toFixed(2)} €</span>
+                            <button class="btn btn-danger btn-sm ms-2" onclick="removeFromCart(${item.product.id})">Rimuovi</button>
+                        </div>
+                    `;
+                }).join('');
+                cartContent.innerHTML += `<div class="mt-3 fw-bold text-end">Totale: ${total.toFixed(2)} €</div>`;
             }
         })
-        .catch(error => console.error('Errore durante la richiesta addToCart:', error));
+        .catch(error => console.error('Errore durante il caricamento del carrello:', error));
+    }
+
+    function removeFromCart(productId) {
+    fetch(`/api/cart/remove?productId=${productId}`, { method: 'DELETE' })
+        .then(response => {
+            if (response.ok) {
+                loadCartItems();
+            } else {
+                alert('Errore durante la rimozione del prodotto');
+            }
+        })
+        .catch(error => console.error('Errore:', error));
     }
 
     let lastScrollTop = 0; // Posizione iniziale dello scroll
@@ -171,8 +281,6 @@
         // Aggiorna la posizione dello scroll
         lastScrollTop = scrollTop;
     });
-
-
 </script>
 </body>
 </html>
