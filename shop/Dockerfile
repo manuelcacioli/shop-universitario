@@ -7,19 +7,20 @@ RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia tutto il contenuto del progetto
-COPY . /app
+# Copia il file pom.xml e la cartella src
+COPY pom.xml .
+COPY src ./src
 
 # Compila il progetto Maven
 RUN mvn clean package -DskipTests --no-transfer-progress
 
-# Stampa il contenuto della cartella target per debug
-RUN echo "### Contenuto della cartella target ###" && ls -la /app/target
+# Stampa il contenuto della cartella target (debug)
+RUN echo "### Contenuto della cartella target ###" && ls -la target
 
-# Copia il file JAR generato nel container
-COPY target/shop-0.0.1-SNAPSHOT.jar app.jar
+# Copia il file JAR nel container
+COPY target/*.jar app.jar
 
-# Esponi la porta su cui Spring Boot gira
+# Esponi la porta su cui Spring Boot gira (default 8080)
 EXPOSE 8080
 
 # Comando per avviare l'applicazione
