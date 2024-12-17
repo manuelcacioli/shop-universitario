@@ -7,11 +7,14 @@ WORKDIR /app
 # Copia tutto il contenuto del progetto
 COPY . /app
 
+# Verifica il contenuto della directory prima della build Maven
+RUN echo "### Contenuto prima di Maven ###" && ls -la /app
+
 # Compila il progetto Maven
 RUN mvn clean package -DskipTests
 
-# Verifica il contenuto della cartella target per debug
-RUN ls -la target
+# Verifica il contenuto della directory dopo la build Maven
+RUN echo "### Contenuto dopo Maven ###" && ls -la /app/target
 
 # Copia il file JAR generato nel container
 COPY target/shop-0.0.1-SNAPSHOT.jar app.jar
