@@ -1,23 +1,14 @@
-# Usa l'immagine base di OpenJDK 17 con Maven
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
-
-# Copia il progetto Maven (tutti i file)
-COPY . .
-
-# Costruisce il file JAR con Maven
-RUN mvn clean package -DskipTests
-
-# Usa l'immagine JDK leggera per il runtime
+# Usa l'immagine di base di OpenJDK 17
 FROM openjdk:17-jdk-slim
+
+# Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia il JAR generato dalla fase precedente
-COPY --from=build /app/target/shop-0.0.1-SNAPSHOT.jar app.jar
+# Copia il file JAR nel container
+COPY target/shop-0.0.1-SNAPSHOT.jar app.jar
 
-# Esponi la porta 8080 (default Spring Boot)
+# Esponi la porta su cui Spring Boot gira (default 8080)
 EXPOSE 8080
 
 # Comando per avviare l'applicazione
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
