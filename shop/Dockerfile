@@ -1,20 +1,20 @@
 # Usa l'immagine di base di OpenJDK 17
 FROM openjdk:17-jdk-slim
 
+# Installa Maven
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+
 # Imposta la directory di lavoro
 WORKDIR /app
 
 # Copia tutto il contenuto del progetto
 COPY . /app
 
-# Pulizia della cache di Maven
-RUN mvn dependency:purge-local-repository -DreResolve=false
+# Compila il progetto Maven
+RUN mvn clean package -DskipTests --no-transfer-progress
 
-# Forza la generazione del JAR con Maven
-RUN mvn clean package -DskipTests
-
-# Verifica il contenuto della cartella target
-RUN echo "### Contenuto della cartella target dopo Maven ###" && ls -la /app/target
+# Stampa il contenuto della cartella target per debug
+RUN echo "### Contenuto della cartella target ###" && ls -la /app/target
 
 # Copia il file JAR generato nel container
 COPY target/shop-0.0.1-SNAPSHOT.jar app.jar
