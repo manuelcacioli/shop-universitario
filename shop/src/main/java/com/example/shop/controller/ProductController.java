@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/")
+@RequestMapping("/")
 public class ProductController {
     @Autowired
     private ProductService service;
@@ -30,6 +30,13 @@ public class ProductController {
 
     @GetMapping("/home")
     public String showProducts(Model model) {
+        List<ProductEntity> products = service.getAllProduct();
+        model.addAttribute("products", products); // Passa la lista prodotti alla vista
+        return "home"; // Nome del file HTML senza suffisso
+    }
+
+    @GetMapping("/")
+    public String home(Model model) {
         List<ProductEntity> products = service.getAllProduct();
         model.addAttribute("products", products); // Passa la lista prodotti alla vista
         return "home"; // Nome del file HTML senza suffisso

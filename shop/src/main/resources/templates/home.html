@@ -67,7 +67,7 @@
                         <h5 class="card-title" th:text="${product.nome}">Nome prodotto</h5>
                         <p class="card-text text-marrone fw-bold" th:text="${product.prezzo} + ' €'">Prezzo</p>
                         <div class="d-flex justify-content-around gap-2">
-                            <a th:href="@{/api/products/{id}(id=${product.id})}" class="btn btn-rosa">Dettagli</a>
+                            <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-rosa">Dettagli</a>
                             <button class="btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Aggiungi al carrello</button>
                         </div>
                     </div>
